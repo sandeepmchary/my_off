@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dell-app
+spec:
+  selector:
+    matchLabels:
+      app: dell-app
+  template:
+    metadata:
+      labels:
+        app: dell-app
+    spec:
+      containers:
+      - name: dell-app
+        image: formycore/tech:1
+        ports:
+        - containerPort: 8080
+

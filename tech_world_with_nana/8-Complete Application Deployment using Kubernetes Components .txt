@@ -1,0 +1,235 @@
+8)
+	- Complete Application Deployment using Kubernetes Components 
+	- with mongodb & mongo express
+	- mongodb as internal service only
+		- one config map which contains DB url 
+		- DB user name and DB password in the secret files
+	- mongo express with deployment.yaml which has ENV variables
+	- this mongo express is connected with external service
+	- this external service is connected to the browser with port number
+	
+	Flow:
+		- browser
+		- External service (Mongo Express)
+		- Mongo express (pod)
+		- Mongo DB internal service
+		- config map (DB url)
+		- Mongo DB pod
+		- Authenticate the user with credentials in secret file
+	1) we need to create Mongo DB deployment
+	2) now we create the secret file
+		- secret's live in Kubernetes not in the repository
+	3) Mongo DB internal service
+		- other pods or other Components can talk with mongo-db
+  4) Mongo express deployment service and also an external config where we put the DB url 
+    - which DB to connect
+      - Mongo DB Address / internal service
+    - which credentials to Authenticate ?
+      - ADMINUSER
+      - ADMINPASSWORD
+  5) after that we need one external service
+
+	- now we execute secret first then the deployment later
+********************************************************************************************
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: mongodb-secret
+  type: Opaque
+  # Opaque is the basic one,other's are TLS certificate
+  data:
+    mongo-root-username: dXNlcm5hbWU=
+    mongo-root-password: c2FtYW50aGE=
+********************************************************************************************   
+	- kubectl apply -f mongo-secret.yaml
+	- kubectl get secret
+********************************************************************************************
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+        ports:
+        - containerPort: 27017
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-secret
+                key: mongo-root-username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-secret
+                key: mongo-root-password
+	********************************************************************************************			
+	- kubectl apply -f mongo_deploy.yaml
+	- kubectl get all
+	- kubectl get pods
+	- change the mongo_deploy.yaml file and add the service sector in it 
+	********************************************************************************************
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+        ports:
+        - containerPort: 27017
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-secret
+                key: mongo-root-username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-secret
+                key: mongo-root-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+
+	********************************************************************************************
+	- kubectl apply -f mongo_deploy.yaml
+	- kubectl get service
+	- kubectl describe service mondo-service
+    - here we have endpoint which the ip address of the pod
+    - to check the ip address is correct or not
+    - $ kubectl get pods -o wide
+    - kubectl get all
+    - kubectl get all | grep mongo
+********************************************************************************************
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-configmap
+  labels:
+    app: mongodb
+data:
+  database_url: mongodb-service
+
+********************************************************************************************
+kubectl apply -f mongo_configmap.yaml
+---------------------------
+- $ kubectl get pods
+- $ kubectl logs mongo-express-name
+- we can access this mongo-express from the browser
+- for that we need one external service
+- under the mongo_express_deployment file only we create another file for the service
+- in the file 
+  - type: LoadBalancer ( for external service)
+      - this is bad name for external service,but internal service is acts as LoadBalancer,
+      - if we have two Mongo DB pods,the internal service would also LoadBalances the request 
+        coming to this pods, i think LoadBalancer name is not choosen very well it confuses
+        but here the LoadBalancer does this basically is 
+          "assigns service an external IP address and so accepts external requests"
+  - here we already have two ports 1 for container port and another for outside world port
+  - now for this type of LoadBalancer(external service) we have to provide the nodePort: 
+  - this nodePort is the external ip address is open
+  - this is the port no we have put in the browser to access the service
+  - nodePort range is : 30000-32768
+  -
+********************************************************************************************
+  apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-express
+spec:
+  selector:
+    matchLabels:
+      app: mongo-express
+  template:
+    metadata:
+      labels:
+        app: mongo-express
+    spec:
+      containers:
+      - name: mongo-express
+        image: mongo-express
+        ports:
+        - containerPort: 8081
+        env:
+        - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-username
+        - name: ME_CONFIG_MONGODB_ADMINPASSWORD 
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-password
+        - name: ME_CONFIG_MONGODB_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: mongodb-configmap
+              key: database_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-express-service
+spec:
+  selector:
+    app: mongo-express
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+      nodePort: 30000
+********************************************************************************************
+- $ kubectl get Service
+- in the internal service (mongo-deploy.yaml) we didn't specificed any type becoz cluster ip
+  which is same as internal service type is default (internal service or cluster IP is default)
+- LoadBalancer will give both clusterIP and External IP THAT'S WHY WE HAVE 3 PORTS 
+- cluster ip has only one ip address and port is associated with this ip Address
+- where as LoadBalancer has two types of IP addresses & two ports are assigned to each one respectevly
+- third port is for external ip address
+- in minikube it is different
+- minikube service [service name]
+- we can open the ip with the browser and the port
+- FLOW CHART
+  - MONGO Express WEBPAGE
+  - Mongo Express External Service
+  - Mongo DB internal Service
+  - Mongo DB pod

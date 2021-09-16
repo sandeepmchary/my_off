@@ -1,0 +1,65 @@
+Vpc,subnets & firewalls
+	- vpc subnets b/w aws and gcp is
+		- vpc n/w are global in gcp
+		- vpc n/w in aws are not global
+		- subnets created will cover all the zones
+		- subnets are regional
+		
+		- in aws the vpc are consined to a specific region,if we created a vm in vpc1 and other vm in vpc2 they need to use vpc peering
+		- 
+	
+	- global 
+	- n/w
+	- vpc n/w
+	- if we delete a vpc it will delete all the firewall n/w also
+	- create new vpc
+		- Name:
+		- Description:
+		- Subnets: 
+			- here we have 2 opions they are custom and automatic
+				- automatic is easy but we cannot have control over the ip address range
+				- custom will give full control over the ip address
+				- if we have hybrid kind of env then we have issues with automatic subnets
+			- Custom:
+				- Name: {should be unique it cannot be used in the other vpc's}
+				- region:
+				- ipaddress: 10.0.1.0/24
+				
+				- create
+				
+				- to add the additional subnets
+				- click on the name
+				- add subnets
+					- Name: vpc-1-europe-west-2-2
+					- Region:
+					- ipaddress: 10.0.2.0/24
+			
+	- create a firewall rule
+		- create firewall rule
+			- Name: vpc-1-firewall1-ssh
+			- N/w: select the vpc we created
+			- Direction of traffic:
+			- Action on match:
+			- Targets: All
+			- Source ip range: 0.0.0.0/0
+			- create
+	- CREATED VPC,SUBNETS,FIREWALL
+-------------------------------------------------------------------------------------------------------
+Launching VM instance from a snapshot
+
+	- https://stackoverflow.com/questions/58733523/google-cloud-platform-service-account-is-unable-to-access-project
+	
+	- gcloud config set "project id"
+	- stop the instance
+	- select the disk
+	- three dots
+	- create snapshot
+		- Name:
+		- location: regional/multiregional
+		- labels:
+			- key: created_by
+			- value: me
+			- create
+		- select the snapshot
+		- create the new instance
+		
