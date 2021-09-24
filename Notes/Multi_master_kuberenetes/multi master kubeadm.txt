@@ -1,0 +1,148 @@
+
+
+sudo apt-get update -y
+sudo apt install ha-proxy -y
+
+
+
+
+frontend kubernetes-frontend
+    bind 0.0.0.0:6443
+    mode tcp
+    option tcplog
+    default_backend kubernetes-backend
+
+backend kubernetes-backend
+    mode tcp
+    option tcp-check
+    balance roundrobin
+    server kubermaster 10.128.0.20:6443 check fall 3 rise 2
+	server kubermaster1 10.128.0.21:6443 check fall 3 rise 2
+
+
+nc -v localhost 6443
+
+sudo apt-get update -y
+swapoff -a
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+sudo apt-get update -y
+apt install docker.io -y
+systemctl restart docker
+systemctl enable docker.service
+
+
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl
+
+sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+
+systemctl daemon-reload
+systemctl start kubelet
+systemctl enable kubelet.service
+
+
+ 
+journalctl -u kubelet.service -n 50 -f
+systemctl status docker.service
+
+vi /lib/systemd/system/docker.service
+
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+CHanGe that TO 
+
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --exec-opt native.cgroupdriver=systemd
+
+
+
+--exec-opt native.cgroupdriver=systemd
+
+systemctl daemon-reload
+systemctl restart docker.service
+systemctl status docker.service
+
+10.138.0.3:6443
+
+kubeadm init --control-plane-endpoint "{ha-proxy}:6443" --upload-certs --apiserver-advertise-address={kube master} --pod-network-cidr=10.244.0.0/16
+
+You can now join any number of the control-plane node running the following command on each as root:
+
+after that we get the below command and we have to paste it in the another master kube-master1
+
+
+  kubeadm join 10.138.0.3:6443 --token te75ng.xoee9hdll2wlg0hb \
+        --discovery-token-ca-cert-hash sha256:1e2505d5e1e3dc1fd735cab423ef9c02d32a813e4ef38500de6df3d317a43bf8 \
+        --control-plane --certificate-key 57856a6f595631b287b8e8830f7857b94245e22d99e7f5ff0746c539d198543a
+
+----------------------------------------------------------------------------
+worker node
+
+apt update -y
+swapoff -a
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+sudo apt-get update -y
+apt install docker.io -y
+systemctl restart docker
+systemctl enable docker.service
+
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl
+
+sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+systemctl daemon-reload
+systemctl start kubelet
+systemctl enable kubelet.service
+----------------------------------------------------------------------------
+under the load balancer
+
+
+switch to normal user 
+
+
+mkdir -p $HOME/.kube
+
+go to the any master machine and copy the file /etc/kubernetes/admin.conf to this load balancer
+under the .kube folder create a file called config 
+
+cp admin.conf ./.kube/config
+
+
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+sudo snap install kubectl --classic
+
+kubectl cluster-info
+
+kubectl get nodes
+
+some nodes still not ready becoz we didn't deployed kubernetes networking 
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+after this every node is up and running
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
