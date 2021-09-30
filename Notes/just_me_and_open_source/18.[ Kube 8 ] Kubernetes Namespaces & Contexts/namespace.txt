@@ -1,0 +1,150 @@
+
+TrieTreeTechnologies namespace
+
+***********************************************************************************
+- Name space is an isolated area
+- if we have two teams Team A and Team B
+- if we create a busybox pod in Team A and another busybox in Team B
+- they both are seperate
+- to create a namespace 
+	- $ kubectl create namespace {name}
+	- $ kubectl create namespace trietree
+- To get all the name space
+	- $ kubectl get all --all-namespace
+- if we are in default namespace and we use kubectl get pods
+	- $ kubectl get pods (in default namespace)
+	- it will show only pods in the default namespace only 
+- if we want to see the another namespace pods then
+	- $ kubectl get pods -n {namespace}
+	- $ kubectl get pods -n trietree
+- here we have two seperate packages
+	- kubectx
+	- kubens
+	
+	- kubectx is used when we have multiple clusters 
+	- this is basically a new context
+	- the default context is under .kube/config 
+	- if we have 3 clusters if we want to change to any cluster we can use kubectx
+	- how to install kubectx
+	- 
+	
+	
+	
+	- kubens is for namespace
+	- if we have 10 namespace if we want to change to any specific namespace
+	- use
+	- $ kubens {namespace}
+	- kubens samantha
+	
+
+- to view the namespace 
+	- $ kubectl get ns
+- to create a namespace
+	- $ kubectl create namespace trietree
+- to view the newly created namespace
+	- $ kubectl get ns
+
+example
+---------------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busbox
+  namespace: default
+spec:
+  containers:
+  - name: busy
+    image: busybox
+	command:
+	  - sleep
+	  - "3600"
+----------------------------------
+
+
+kubectl create -f busybox.yaml
+kubectl get pods
+if we again try to create the busbox.yaml it will throw an error already exists
+
+if we want another busbox then we can use another namespace
+
+--------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busy
+  namespace: trietree
+spec:
+  containers:
+  - name: busy
+    image: busybox
+	command:
+	  - sleep
+	  - "3600"
+--------------------------
+- to view the newly created busybox 
+	- $ kubectl get pods -n trietree
+- to get all the pods in all the namespace
+	- $ kubectl get all --all-namespace
+- to view only the specific pods
+	- $ kubectl get pods -n {namespace}
+- setting the namespace preferences - switching to another namespace
+- you can permanently save the namespces for all the subsequent kubectl commands in that context
+	- $ kubectl config set-context --current --namespace=default
+	- $ kubectl config set-context --current --namespace=trietree
+	- $ kubectl get pods (it will show only from the trietree namespace)
+**********************************************************************************************
+
+
+
+
+$ kubectl cluster-info
+$ kubectl get pods
+$ kubectl get namespace
+-- creating the namespace
+    $ kubectl create namespace {name}
+    $ kubectl create namespace demo
+--------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  - name: nginx-app
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+--------------------------------
+- $ kubectl create -f nginx-pod.yml
+- in the same namespace we cannot have pods with same name duplicate
+- delete the kubectl just now created
+    $ kubectl delete -f nginx-pod.yml
+- kubectl -n kube-system get pods
+
+- how to change the context of kubectl to kube-system with out using the -n option
+- how to create new context
+    - $ kubectl config view
+    - the above output is the current configuration from the .kube directory
+    - here we see cluster defination
+    - which cluster we are using
+    - how many contexts
+    - users
+    - name of the context
+- how to get only contexts
+    - kubectl get config get-contexts
+        - this will show us how many configuration are there
+- creating the new configuration
+    - kubectl config set-context {name of the context} --namespace={namespace} --user=kubernetes-admin
+    --cluster=kubernetes
+    - $ kubectl config set-context kubesys --namespace=kube-system --user=kubernetes-admin
+    --cluster=kubernetes
+    - $ kubectl config get-contexts
+- how to change the current contexts
+    - $ kubectl config current-context
+    - $ kubectl config use-context sam
+    - $ kubectl get pods
+- create another context
+    - $ kubectl config set-context dell --namespace=kube-system --user=kubernetes-admin --cluster=kubernetes
+- defining alias
+    - alias kcc='kubectl config current-context'
+    - alias kuc='kubectl config use-context'
+ 
+

@@ -1,1 +1,73 @@
 how to create pods and replicasets & deployments
+---------------------------------------
+vi nginx-pod.yml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+---------------------------------------
+$ kubectl get all -o wide
+$ kubectl create -f nginx-pod.yml
+$ kubectl get events
+$ kubectl describe pod nginx
+$ kubectl delete pod nginx
+------------------------------------------
+nignx-replicas.yml
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-app
+  labels:
+    run: nginx
+spec:
+  # modify replicas according to your case
+  replicas: 2
+  selector:
+    matchLabels:
+      run: nginx
+  template:
+    metadata:
+      labels:
+        run: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+------------------------------------------
+$ kubectl delete pod nginx-app-fnz9n
+$ kubectl delete repliaset nginx-app
+
+------------------------------------------
+nginx-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+------------------------------------------
+
+$ kubectl describe pods {pod name (that comes from kubectl get all -o wide)}
+$ kubectl describe repliaset
+$ kubectl get pods -l app=nginx
+-- if we change the value of the replicas in the file it will throw error
+$ kubectl scale deploy nginx-deploy --replicas=3
+-- we can decrease/increase the value
