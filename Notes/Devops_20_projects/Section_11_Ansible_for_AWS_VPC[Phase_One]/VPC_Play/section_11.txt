@@ -223,6 +223,8 @@ vi nat_Gateway.yml
       - dest: 0.0.0.0/0
         gateway_id: "{{Natgw_out.nat_gateway.id}}"
   register: PrivRT_out
-  
+**************************************
+- creation of nat Gateway takes time
+
 
 
