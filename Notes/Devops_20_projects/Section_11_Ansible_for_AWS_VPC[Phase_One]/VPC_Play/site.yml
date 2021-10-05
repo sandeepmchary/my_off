@@ -152,6 +152,23 @@
         - PubRT_out.route_table.id
         - Natgw_out.nat_gateway.id
         - PrivRT_out.route_table.id
+    - set_fact:
+        vpcId: "{{vpcout.vpc.id}}"
+        PubSub1id: "{{samantha_pubsub1_out.subnet.id}}"
+        PubSub2id: "{{sam_pub2_out.subnet.id}}"
+        PubSub3id: "{{sam_pub3_out.subnet.id}}"
+        PrivSub1id: "{{sam_priv1_out.subnet.id}}"
+        PrivSub2id: "{{sam_priv2_out.subnet.id}}"
+        PrivSub3id: "{{sam_priv3_out.subnet.id}}"
+        igwid: "{{igw_out.gateway_id}}"
+        Pubrtid: "{{PubRT_out.route_table.id}}"
+        NatGWId: "{{Natgw_out.nat_gateway.id}}"
+        PrivRTId: "{{PrivRT_out.route_table.id}}"
+        cacheable: yes
+    - name: create variables files for vpc output
+      copy:
+        content: "vpcId: {{vpcout.vpc.id}}\nPubSub1id: {{samantha_pubsub1_out.subnet.id}}\nPubSub2id: {{sam_pub2_out.subnet.id}}\nPubSub3id: {{sam_pub3_out.subnet.id}}\nPrivSub1id: {{sam_priv1_out.subnet.id}}\nPrivSub2id: {{sam_priv2_out.subnet.id}}\nPrivSub3id: {{sam_priv3_out.subnet.id}}\nigwid: {{igw_out.gateway_id}}\nPubrtid: {{PubRT_out.route_table.id}}\nNatGWId: {{Natgw_out.nat_gateway.id}}\nPrivRTId: {{PrivRT_out.route_table.id}}"
+        dest: output_vars
 
 
 
