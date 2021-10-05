@@ -114,7 +114,28 @@
           - dest: 0.0.0.0/0
             gateway_id: "{{igw_out.gateway_id}}"
       register: PubRT_out
-
+    - name: Create new NAT Gateway and allocate new EIP 
+      ec2_vpc_nat_gateway:
+        state: "{{state}}"
+        subnet_id: "{{samantha_pubsub1_out.subnet.id}}"
+        wait: yes
+        region: "{{region}}"
+        if_exists_do_not_create: true
+      register: Natgw_out
+    - name: Set Up the private subnet route table
+      ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        tags:
+          Name: Sam_PrivRT
+        subnets:
+          - "{{sam_priv1_out.subnet.id}}"
+          - "{{sam_priv2_out.subnet.id}}"
+          - "{{sam_priv3_out.subnet.id}}"
+        routes:
+          - dest: 0.0.0.0/0
+        gateway_id: "{{Natgw_out.nat_gateway.id}}"
+      register: PrivRT_out
 
 
 
