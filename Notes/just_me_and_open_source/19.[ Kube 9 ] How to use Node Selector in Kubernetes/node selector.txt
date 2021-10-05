@@ -1,0 +1,35 @@
+- if we want to deploy a pod on a particular node then we have assign a label to that node
+- $ kubectl get nodes -o wide
+* to assign a label to node
+    - $ kubectl label node {nodename} demoserver=true
+    - $ kubectl get node {nodename} --show-labels
+    - in the deployment yaml file we need to mention that
+    nodeSelector:
+      demoserver: "true"
+    - at the end
+**********************************************************
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: myapp
+        image: nginx
+      nodeSelector:
+        demoserver: "true"
+**********************************************************
+$ kubectl get pods -n default
+$ kubectl describe pod {podname} | grep -i nodeSelector
+* scale the pod
+    - $ kubectl scale deploy nginx-deploy --replicas=3

@@ -92,6 +92,14 @@
       register: sam_priv3_out
     - debug:
         var: sam_priv3_out
+    - name: Internet Gateway setup
+      ec2_vpc_igw:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        state: "{{state}}"
+        resource_tags:
+          Name: samantha_IGW
+      register: igw_out
 
 
 
