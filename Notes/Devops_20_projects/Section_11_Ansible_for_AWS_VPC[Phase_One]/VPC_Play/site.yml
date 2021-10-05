@@ -107,14 +107,14 @@
         tags:
           Name: samantha_PUBRT
         subnets:
-          - "{{pubsub1_out.subnet.id}}"
-          - "{{pubsub2_out.subnet.id}}"
-          - "{{pubsub3_out.subnet.id}}"
+          - "{{sam_pub1_out.subnet.id}}"
+          - "{{sam_pub2_out.subnet.id}}"
+          - "{{sam_pub3_out.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{igw_out.gateway_id}}"
       register: PubRT_out
-      
+
 
 
 
