@@ -122,8 +122,8 @@
         region: "{{region}}"
         if_exist_do_not_create: true
       register: Natgw_out
-    - debug:
-        var: Natgw_out  
+    #- debug:
+    #    var: Natgw_out  
     - name: Set Up the private subnet route table
       ec2_vpc_route_table:
         vpc_id: "{{vpcout.vpc.id}}"
@@ -139,7 +139,7 @@
             gateway_id: "{{Natgw_out.nat_gateway_id}}"
       register: PrivRT_out
     - debug:
-      var: "{{item}}"
+        var: "{{item}}"
       loop:
         - vpcout.vpc.id
         - samantha_pubsub1_out.subnet.id
