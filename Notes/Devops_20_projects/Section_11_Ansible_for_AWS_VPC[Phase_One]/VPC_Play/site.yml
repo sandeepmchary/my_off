@@ -140,18 +140,18 @@
       register: PrivRT_out
     - debug:
       vars: "{{items}}"
-    loop:
-      - vpcout.vpc.id
-      - samantha_pubsub1_out.subnet.id
-      - sam_pub2_out.subnet.id
-      - sam_pub3_out.subnet.id
-      - sam_priv1_out.subnet.id
-      - sam_priv2_out.subnet.id
-      - sam_priv3_out.subnet.id
-      - igw_out.gateway_id
-      - PubRT_out.route_table.id
-      - Natgw_out.nat_gateway.id
-      - PrivRT_out.route_table.id
+      loop:
+        - vpcout.vpc.id
+        - samantha_pubsub1_out.subnet.id
+        - sam_pub2_out.subnet.id
+        - sam_pub3_out.subnet.id
+        - sam_priv1_out.subnet.id
+        - sam_priv2_out.subnet.id
+        - sam_priv3_out.subnet.id
+        - igw_out.gateway_id
+        - PubRT_out.route_table.id
+        - Natgw_out.nat_gateway.id
+        - PrivRT_out.route_table.id
 
 
 
