@@ -107,7 +107,7 @@
         tags:
           Name: samantha_PUBRT
         subnets:
-          - "{{sam_pub1_out.subnet.id}}"
+          - "{{samantha_pubsub1_out.subnet.id}}"
           - "{{sam_pub2_out.subnet.id}}"
           - "{{sam_pub3_out.subnet.id}}"
         routes:
