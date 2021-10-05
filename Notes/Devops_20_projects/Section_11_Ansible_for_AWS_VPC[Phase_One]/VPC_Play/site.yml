@@ -120,7 +120,7 @@
         subnet_id: "{{samantha_pubsub1_out.subnet.id}}"
         wait: yes
         region: "{{region}}"
-        if_exists_do_not_create: true
+        if_exist_do_not_create: true
       register: Natgw_out
     - name: Set Up the private subnet route table
       ec2_vpc_route_table:
