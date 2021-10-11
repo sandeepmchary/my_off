@@ -1,0 +1,6 @@
+- example
+    - list all the tickets that we worked on and send the mail to manager
+    - search a log file and check the event inside of it, if the event is found in the log 
+      send the mail to manager
+    - create the module and use this module in another programme
+    
