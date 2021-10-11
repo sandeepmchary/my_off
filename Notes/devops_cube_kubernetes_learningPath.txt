@@ -1,0 +1,241 @@
+https://devopscube.com/kubernetes-deployment-tutorial/
+	-- Kubernetes Deployment Tutorial For Beginners
+
+    by
+    devopscube
+    November 29, 2018
+	
+https://devopscube.com/kubernetes-certification-tips/
+		Kubernetes Certification Tips from a Kubernetes Certified Administrator
+
+    by
+    devopscube
+    August 20, 2019
+
+https://devopscube.com/kubernetes-monitoring-sensu/
+	Kubernetes monitoring With Sensu: Setting up Container Sidecar Agent
+
+    by
+    Jef Spaleta
+    August 27, 2019
+
+https://devopscube.com/setup-kube-state-metrics/
+	How To Setup Kube State Metrics on Kubernetes
+
+    by
+    Bibin Wilson
+    November 3, 2019
+
+https://devopscube.com/alert-manager-kubernetes-guide/
+	-- Setting Up Alert Manager on Kubernetes – Beginners Guide
+
+    by
+    devopscube
+    March 10, 2021
+	
+https://devopscube.com/node-exporter-kubernetes/
+	-- How to Setup Prometheus Node Exporter on Kubernetes
+
+    by
+    devopscube
+    April 6, 2021
+	
+https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/
+	-- How to Setup Prometheus Monitoring On Kubernetes Cluster
+
+    by
+    Bibin Wilson
+    April 7, 2021
+	
+https://devopscube.com/setup-grafana-kubernetes/
+
+	How To Setup Grafana On Kubernetes
+
+    by
+    Bibin Wilson
+    April 23, 2021
+
+https://devopscube.com/setup-jenkins-on-kubernetes-cluster/
+
+	How To Setup Jenkins On Kubernetes Cluster – Beginners Guide
+
+    by
+    Bibin Wilson
+    May 9, 2021
+
+https://devopscube.com/setup-kubernetes-cluster-kubeadm/
+	How To Setup Kubernetes Cluster Using Kubeadm
+
+    by
+    Bibin Wilson
+    May 18, 2021
+	
+https://devopscube.com/kubernetes-cluster-vagrant/
+	How to Setup Kubernetes Cluster on Vagrant VMs
+
+    by
+    Bibin Wilson
+    May 19, 2021
+	
+https://devopscube.com/install-configure-helm-kubernetes/
+
+	Helm Tutorial: How To Install and Configure Helm
+
+    by
+    Bibin Wilson
+    May 26, 2021
+
+https://devopscube.com/create-kubernetes-jobs-cron-jobs/
+
+	How To Create Kubernetes Jobs/Cronjobs – Getting Started Guide
+
+    by
+    Bibin Wilson
+    May 27, 2021
+
+https://devopscube.com/create-kubernetes-role/
+	How to Create kubernetes Role for Service Account
+
+    by
+    Bibin Wilson
+    June 1, 2021
+
+https://devopscube.com/kubernetes-api-access-service-account/
+	How To Create Kubernetes Service Account For API Access
+
+    by
+    Bibin Wilson
+    June 5, 2021
+	
+https://devopscube.com/setup-kubernetes-cluster-google-cloud/
+	How To Setup Kubernetes Cluster On Google Cloud (GKE)
+
+    by
+    Bibin Wilson
+    June 13, 2021
+
+https://devopscube.com/persistent-volume-google-kubernetes-engine/
+
+	How to Add Persistent Volume in Google Kubernetes Engine
+
+    by
+    Bibin Wilson
+    June 17, 2021
+	
+https://devopscube.com/setup-ingress-gke-ingress-controller/
+
+	How to Setup Ingress on GKE using GKE Ingress Controller
+
+    by
+    Bibin Wilson
+    June 24, 2021
+
+https://devopscube.com/build-docker-image-kubernetes-pod/
+	How To Build Docker Image In Kubernetes Pod
+
+    by
+    devopscube
+    July 24, 2021
+	
+https://devopscube.com/cks-exam-guide-tips/
+	CKS Exam Study Guide: Resources to Pass Certified Kubernetes Security Specialist
+
+    by
+    Bibin Wilson
+    August 1, 2021
+
+https://devopscube.com/cka-exam-study-guide/
+
+	CKA Exam Study Guide: A Complete Resource For CKA Aspirants
+
+    by
+    Shishir Khandelwal
+    August 1, 2021
+	
+https://devopscube.com/jenkins-build-agents-kubernetes/
+
+	How to Setup Jenkins Build Agents on Kubernetes Pods
+
+    by
+    Bibin Wilson
+    August 2, 2021
+	
+https://devopscube.com/vault-agent-injector-tutorial/
+
+	Vault Agent Injector Tutorial: Inject Secrets to Pods Using Vault Agent
+
+    by
+    Bibin Wilson
+    August 11, 2021
+	
+https://devopscube.com/kubernetes-ingress-tutorial/
+
+	Kubernetes Ingress Tutorial For Beginners
+
+    by
+    Bibin Wilson
+    August 17, 2021
+	
+https://devopscube.com/vault-in-kubernetes/
+
+	How to Setup Vault in Kubernetes- Beginners Tutorial
+
+    by
+    Bibin Wilson
+    and
+    Shishir Khandelwal
+    August 25, 2021
+
+https://devopscube.com/deploy-postgresql-statefulset/
+	
+	How to Deploy PostgreSQL Statefulset in Kubernetes With High Availability
+
+    by
+    Bibin Wilson
+    and
+    Shishir Khandelwal
+    August 25, 2021
+	
+https://devopscube.com/ckad-exam-updates/
+
+	CKAD Exam Updates and Changes for 2021
+
+    by
+    devopscube
+    September 3, 2021
+	
+https://devopscube.com/ckad-exam-study-guide/
+	
+CKAD Exam Study Guide: A Complete Resource for CKAD Aspirants
+
+    by
+    Shishir Khandelwal
+    September 5, 2021
+
+https://devopscube.com/kubernetes-minikube-tutorial/
+	
+Kubernetes Minikube Tutorial for Beginners
+
+    by
+    Bibin Wilson
+    September 10, 2021
+
+
+https://devopscube.com/deploy-mongodb-kubernetes/
+	
+How To Deploy MongoDB on Kubernetes – Beginners Guide
+
+    by
+    Bibin Wilson
+    and
+    Shishir Khandelwal
+    September 17, 2021
+
+https://devopscube.com/kubernetes-certification-coupon/
+	
+	Kubernetes Certification Coupon: 15% Off + $100 Off On Kubernetes Course bundle
+
+    by
+    devopscube
+    October 6, 2021
+
