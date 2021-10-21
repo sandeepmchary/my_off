@@ -1,0 +1,36 @@
+Git/Github
+Gradle
+    - faster than maven and apache ant
+Sonarqube
+Jenkins
+Docker
+Nexus
+Kubernetes
+Helm
+Datree.io
+    - Prevents Kubernetes misconfiguration from reaching production
+-------------------------------------------------------------------------
+steps
+
+    - Pull the code from github
+    - Do the static code analysis using Sonarqube with help of sonar gradle plugin
+    - Check the status of the quality gate in sonar
+                if sonar check fails
+                        - mark ci as fail and send notification
+        - if success 
+          - Using Multistage Dockerfile build the code and generate artifact and create the image
+          - push the image to private docker registry Nexus
+          - check if any misconfiguration helm charts
+          - Helm charts push to Nexus
+          - Maual Approval
+          - Deploy on K8s cluster
+          - Send Api to test app Deployment
+----------------------------------------------
+Process
+    - Jenkins with 20 gb
+    - Nexus
+    - Sonarqube
+    - Kubernetes master and cluster
+    
+
+    
