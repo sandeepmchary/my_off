@@ -1,0 +1,45 @@
+---
+  - name: Install jenkins
+    become: true
+    hosts: check
+    tasks:
+      - name: Install wget
+        yum:
+          name: wget
+          state: present
+      - name: Install ca-certificates
+        yum:
+          name: ca-certificates
+          state: present
+      - name: Ensure epel repo present
+        yum:
+          name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+          state: present
+      - name: Install Java 11
+        yum:
+          name: java-11-openjdk-devel
+          state: present
+      - name: Download repos
+        get_url:
+          url: http://pkg.jenkins.io/redhat-stable/jenkins.repo
+          dest: /etc/yum.repos.d/jenkins.repo
+      - name: Import RPM Keys
+        ansible.builtin.rpm_key:
+          state: present
+          key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+      - name: jenkins Install
+        yum:
+          name: jenkins
+          state: present
+      - name: start the service
+        ansible.builtin.service:
+          name: jenkins
+          state: restarted
+      - name: Password for jenkins
+        shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+        register: result
+        changed_when: false
+      - name: printi init password 
+        debug:
+          var: result.stdout
+          

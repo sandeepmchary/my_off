@@ -1,0 +1,56 @@
+install jenkins
+
+sudo yum install wget -y
+yum install -y ca-certificates
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+sudo yum upgrade -y
+sudo yum install epel-release java-11-openjdk-devel -y
+sudo yum install jenkins -y
+sudo systemctl daemon-reload
+
+install ansible in the same jenkins server
+----
+under jenkins  
+    - install ansible plugin
+- go to global tool configuration 
+    - name: ansible
+    $ which ansible
+    - /bin/ansible
+    - but paste only /bin
+---------------------
+pipeline{
+    agent any
+    tools{
+        maven 'maven_3'
+    }
+    stages{
+        stage('SCM'){
+            steps {
+            git 'https://github.com/javahometech/dockeransiblejenkins.git'
+        }
+        }
+        stage ('Maven Build'){
+            steps{
+                sh 'mvn clean install package'
+            }
+        }
+
+    }
+}
+---------------------
+- now docker Build
+-  docker build -t name: v1
+- this version needes to change every commit for this
+- for this we use a def getVersion()
+- in the version id we place commit id
+- git rev-parse HEAD
+- git rev-parse --short HEAD
+    - select the shell 
+        - shell script: git rev-parse --short HEAD
+        - advanced
+        - check return standard output ( so the we can store the return value in variable )
+- store the value globally so we can use it multiple times
+- go to declarative Directive Generator
+- select environment

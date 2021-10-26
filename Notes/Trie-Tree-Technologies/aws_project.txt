@@ -1,0 +1,177 @@
+AWS project
+	- idea
+		- cloud architect
+		- client needs a new page in the their old website
+			- some thing like contest
+			- ex: bawarchi birayani
+				- new varieties recipes they can upload in this webpage
+				- how many no of people he can expect
+				- how many hits
+					- no of servers
+					- ram 
+					- Disk
+					- what connections we need to have 
+					- what kind of load balancer
+					- in which geo this contest is going to happen
+		- here in aws we are trying this 
+		- first vpc
+		- multiple subnets
+		- multiple zones
+		- security groups
+		- Network acl's
+		- S3 ( to store the config files css js html  files)
+		- EC2 (webservers across the AZ's)
+			- AMI & Bootstraping
+		- this machine should have ELB for High Availbility for public expose
+		- Auto Scale group
+		- DBS (mysql - rds)
+--------------------------------------------------------
+aws project architect 
+	- vpc (us-east-2)(10.0.0.0/16)
+		- with AZ - A & AZ - B
+		- with each one public & private subnet
+		- in AZ - A
+		- public subnet 10.0.1.0/24
+		- private subnet 10.0.3.0/24
+		
+		
+		- in AZ - B
+		- public subnet 10.0.2.0/24
+		- private subnet 10.0.4.0/24
+
+s3 bucket (HTML)
+AMI(boot strap)
+IAM ( roles and policies)
+	- when ever we want to connect to the S3 with role as trusted service
+	- this role commuincate the AMI
+	
+DB
+	- 
+
+ELB & ASG
+
+- ELB will connect with two servers in each zone A & B
+- DB also in the two zones one is master and one is slave with syncronization
+- the two servers will talk to master DB and the master DB is syncronized with slave
+- if the cpu utilization in increased to 80% then with the help of ASG each one server is added in the 
+	two zones if the the cpu utilization is 60% then it terminates the newly created servers
+- if the master DB goes down then slave becomes master and the instances will connect to new master 
+if we bring up the dead master up then it becomes slave
+
+- customer will come and connect to the ELB 
+
+---------------------------------------------------------------------------------------------------------
+AWS project 
+	- vpc
+		- your vpc
+		- create vpc
+		- Name: samantha_vpc
+		- ipv4: 10.0.0.0/16
+		- create vpc
+	
+	- Internet Gateway ( to get the outside access to the public subnets)
+		- create Internet Gateway
+		- Name: sam-igw
+		- create Internet Gateway
+			- after creation right click on that 
+		- attach to VPC
+		- samantha_vpc
+		- Attach Internet Gateway
+	
+	- Route Tables:
+		- here we get a default route table with samantha_vpc (Name it)(Default RT)
+			- create Route Tables 
+			- Name: sam-public-RT
+			- select the vpc
+			- create route table
+			- select the route table
+			- edit the routes
+	with these route edit we will attach the IGW WHEN EVER I GOTO MY SUBNET I WILL GO AND CONNECT 
+			  TO THE Internet Gateway USING THIS ROUTE
+			  without the route table we cannot connect to the IGW, from our subnets
+			- Add route (0.0.0.0/0) (sam-igw) 
+			- after creating the subnets then to have internet connect then we have to give this route table
+
+	- SUBNET
+		- create subnet
+		- VPC: samantha_vpc
+		- subnet settings:
+			- subnet name: sam-pub-sub-1
+			- ipv4 cidr: 10.0.1.0/24
+			- availability zone : us-east-1a
+			- create subnet
+		- create subnet
+		- vpc: samantha_vpc
+		- subnet settings:
+			- subnet name: sam-pub-sub-2
+			- ipv4 cidr: 10.0.2.0/24
+			- availability zone : us-east-1b
+			- create subnet
+		- create subnet
+		- vpc: samantha_vpc
+		- subnet settings:
+			- subnet name: sam-priv-sub-1
+			- ipv4 cidr: 10.0.3.0/24
+			- create subnet
+			
+		- create subnet
+		- vpc: samantha_vpc
+		- subnet settings:
+			- subnet name: sam-priv-sub-2
+			- ipv4 cidr: 10.0.4.0/24
+			- create subnet
+			
+		- select the public subnet (sam-pub-sub-1)
+			- select the route table
+			- edit route table association
+			- add the sam-public-RT
+			- save
+			
+		- select the public subnet (sam-pub-sub-2)
+			- select the route table
+			- edit route table association
+			- add the sam-public-RT
+			- save	
+	
+	- Security Groups (for webservers and Database)
+		- Security Groups (sam-webserver-sg)
+		- vpc: samantha_vpc
+		- Inbound rules:
+			- http (0.0.0.0/0)
+			- ssh (0.0.0.0/0)
+		
+		- security groups (sam-db-sg)
+		- vpc: samantha_vpc
+		- Inbound rule: 
+			- mysql/aurora(sam-webserver-sg)
+		- create security group
+		
+	- S3
+		- Create Bucket
+			- Bucket name: sam-bucket-s3-project
+			- region: us-east-1
+			- block all public access
+			- will create a role such that we can access this s3 with ec2 
+			- create bucket
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			

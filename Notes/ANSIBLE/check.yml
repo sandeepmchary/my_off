@@ -1,0 +1,9 @@
+---
+  - name: Intall jenkins
+    hosts: check
+    become: true
+    tasks:
+      - name: Install wget
+        yum:
+          name: wget
+          state: present
