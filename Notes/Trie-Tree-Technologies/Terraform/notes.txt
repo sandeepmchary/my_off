@@ -1,0 +1,21 @@
+trie tech technologies
+	- vpc
+	- subnets
+	- rt
+	- igw
+
+resource "aws_vpc" "samantha_vpc"{
+here the vpc is not yet created, for creating the subnet we need the vpc which we dont have for now 
+so we have to take the "provider_resource_type.name.id"
+- what is data source
+    - if any of the existing resource is already there then we can get the info from it
+
+- terraform destroy type.name
+- this is very risky we have destroyed the type with a command but it is in the configuration 
+part if we run again it will crated the destroyed part again, best is to remove from the file
+itself or else comment it out 
+ - /* starting of the line
+   ending of the line
+   */
+- always go with config files only 
+- DONT DO IT WITH TARGET
