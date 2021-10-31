@@ -1,0 +1,49 @@
+Section 2 - Creating Resource and Terraform Fundamentals
+
+--------------------------
+provider "aws"{
+    profile = "terra"
+    region = "us-east-2"
+}
+resource "aws_vpc" "javahome" {
+  cidr_block = "10.0.0.0/16"
+  instance_tenancy = "default"
+  tags = {
+    "Name" = "JavaHOme"
+  }
+}
+--------------------------
+8) Terraform outputs and interpolation
+output value is for getting the value of id
+______________________________________________
+	provider "aws"{
+    profile = "terra"
+    region = "us-east-2"
+}
+resource "aws_vpc" "javahome" {
+  cidr_block = "10.0.0.0/16"
+  instance_tenancy = "default"
+  tags = {
+    "Name" = "JavaHOme"
+  }
+}
+
+output "anyname"{
+	value = "${provider_resource_type.name of the resource.value of the resource}"
+}
+output "javahomecidr" {
+  value = "${aws_vpc.javahome.cidr_block}"
+  }
+output "Vpc_id_value" {
+  value = "${aws_vpc.javahome.id}"
+}
+____________________________________________________________________________________________
+9) Terraform local state file:
+
+- state file has the current state of the configuration 
+- if we change anything in the configuration file(script) first it will check with the state file if any changes are there then terraform apply will modify/update/destroy accordingly
+- if we change the value or delete the state file, terraform will again create the resources
+____________________________________________________________________________________________
+10) Terraform remote state file:
+- the state will be in the local it is good for one devloper when there are multiple devlopers then 
+
